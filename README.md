@@ -51,6 +51,9 @@ nvm install 16.6.0
 nvm use 16.6.0
 npm i -g npm@latest
 ```
+### Installé les fichier de base de donnée
+
+Récupèré le fichier "obvision.sql" et importé le dans votre gestionnaire de base de donnée SQL (phpmyadmin ou Adminer) et importé y le fichier
 
 ### Démarré le robot
 Deux options s'offre à vous installé le bot à l'aide des scripts ou manuellement
@@ -126,6 +129,10 @@ nvm install 16.6.0
 nvm use 16.6.0
 npm i -g npm@latest
 ```
+
+### Installed the database files
+
+Recovered the file "obvision.sql" and imported it in your SQL database manager (phpmyadmin or Adminer) and imported the file
 
 ### Start the bot
 You have two options to install the bot using the scripts or manually
