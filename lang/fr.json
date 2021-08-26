@@ -1,0 +1,64 @@
+{
+"help": {
+		"tts" : {
+			"desc": "Parlez avec le bot",
+			"example" : ["tts salut c'est moi"],
+			"usage": "tts <texte>"
+		},
+		"tts" : {
+			"desc": "Vous enregistre et retranscrit votre voix à travers le bot",
+			"example" :  ["record"],
+			"usage":"record"
+		},	
+		"leave" : {
+			"desc" : "Fait quitté le robot du salon vocal",
+			"example": ["leave"],
+			"usage": "leave"
+		},
+		"stats": {
+			"desc": "Obtenez des info sur le bot",
+			"example": ["stats"],
+			"usage" : "stats"
+		},
+		"ping": {
+			"desc" : "Obtenez la latence du bot",
+			"example": ["ping"],
+			"usage": "ping"
+		},
+		"invite":{
+			"desc": "Obtenez l'invitaton du bot",
+			"example": ["invite"],
+			"usage": "invite"
+		},
+		"help" :{
+			"desc": "Cette commande vous affiche cette page d'aide",
+			"example": ["help", "help ping"],
+			"usage" :"help [nom commande]"
+		},
+		"config" :{
+			"desc" : "Configuré vos options utilisateurs",
+			"example" : ["config pitch 5"],
+			"usage" : "config <option> <valeur>"
+		},
+		"ban" : {
+			 "desc": "Banni un utilisateur mentionné en lui mettant une raison.",
+            "usage": "ban <ID|@user> [raison]",
+            "example": ["ban @garder500#8260 trop perturbateur","ban @garder500#8260"]
+		},
+		"kick" : {
+			 "desc": "Kick un utilisateur mentionné en lui mettant une raison.",
+            "usage": "kick <ID|@user> [raison]",
+            "example": ["kick @garder500#8260 trop perturbateur","kick @garder500#8260"]
+		},
+		"clear": {
+			"desc": "Supprimé autant de message que vous le voulez dans un salon",
+			"example" : ["clear 150","clear 150 @garder500#8260"],
+			"usage": "clear <Nombre de message> [ID|@user|displayName|Name]"
+		},
+		"anime": {
+			   "description": "Utilisé cette commande pour cherché un animé sur Neko-Sama",
+            "usage": "search <nom d'animé>",
+            "example": ["search Full metal alchemist"]
+		}
+	}
+}

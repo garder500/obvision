@@ -1,0 +1,43 @@
+{
+  "name": "G-bot",
+  "version": "2.0.0",
+  "description": "G-bot NodeJs Bot",
+  "main": "index.js",
+  "scripts": {
+    "install": "npm ci && npm i -g pm2 && pm2 start index.js --name 'obvision'",
+    "start": "pm2 start index.js --name obvision",
+    "install-without-pm2": "npm ci && node .",
+    "start-without-pm2" :"node ."
+  },
+  "author": "garder500",
+  "dependencies": {
+    "@discordjs/voice": "^0.4.0",
+    "@ffmpeg-installer/ffmpeg": "^1.0.20",
+    "adf.ly": "^1.2.0",
+    "beautify": "0.0.8",
+    "bufferutil": "^4.0.3",
+    "canvas": "^2.8.0",
+    "colors": "^1.4.0",
+    "discord.js": "^13.1.0",
+    "erlpack": "^0.1.3",
+    "ffmpeg": "^0.0.4",
+    "ffmpeg-binaries": "^3.2.2-3",
+    "ffmpeg-static": "^4.3.0",
+    "figlet": "^1.5.0",
+    "fluent-ffmpeg": "^2.1.2",
+    "geoip-lite": "^1.4.2",
+    "ipinfo": "^1.5.1",
+    "microsoft-cognitiveservices-speech-sdk": "^1.17.0",
+    "moment": "^2.29.1",
+    "mysql2": "^2.2.5",
+    "node-fetch": "^2.6.1",
+    "node-gtts": "^2.0.2",
+    "node-gyp": "^8.1.0",
+    "node-opus": "^0.3.3",
+    "password-hash": "^1.2.2",
+    "simpleflakes": "^2.1.0",
+    "socket.io-client": "^4.1.3",
+    "underscore": "^1.13.1",
+    "ytdl-core": "^4.9.0"
+  }
+}

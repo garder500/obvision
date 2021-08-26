@@ -1,0 +1,10 @@
+{
+    "token":"YOUR TOKEN",
+    "owner": {
+        "id": "YOUR ID"
+    },
+    "owners": [
+        "SOME ID",
+        "SOME ID"
+    ]
+}
