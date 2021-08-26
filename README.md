@@ -77,7 +77,7 @@ pm2 start index.js --name "your bot name"
 npm ci
 node index.js
 ```
-
+------------------------------------------------------------------------------------------------------
 > (Instruction for English users)
 
 ## Configuration
