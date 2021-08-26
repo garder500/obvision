@@ -18,14 +18,11 @@ class Play extends Command {
     let EOR = client.functions.EOR;
  if(!message.member.voice.channel) return message.channel.send({ embeds:[ EOR({ desc: "Vous devez rejoindre un salon vocal",error: "yes"},message)]})
 if(!args[1])  return message.channel.send({ embeds:[ EOR({ desc: "Vous devez écrire l'url Youtube, ou le titre de la musique/vidéo",error: "yes"},message)]})
-     require("node-fetch")(`https://www.googleapis.com/youtube/v3/search?part=snippet&type=playlist&maxResults=50&key=AIzaSyAgpPns8AwUjlXc63jXw7T4bQ9bRoCy7As&q=${encodeURIComponent(args.slice(1).join(" "))}`,{
+     require("node-fetch")(`https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=50&key=AIzaSyAJZuyf3mZ4KzDVTmNfr-SGK498GcJxeMU&q=${encodeURIComponent(args.slice(1).join(" "))}`,{
         }).then(r =>r.json()).then(js =>{
             if(js.items.length < 1) return message.channel.send({ embeds: [EOR({ desc: "Aucune chanson n'as été trouvé pour ce titre",error: "yes"},message)]}) 
-require("node-fetch")(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&key=AIzaSyAgpPns8AwUjlXc63jXw7T4bQ9bRoCy7As&maxResults=50&playlistId=${encodeURIComponent(js.items[0].id.playlistId)}`,{
-        }).then(res =>res.json()).then(json =>{
-if (client.timeoutsVoc.guild.has(message.guild.id) && client.timeoutsVoc.cmd.has(`play-${message.guild.id}`)) return message.channel.send({ embeds :[EOR({desc:"> Le bot doit d'abord quitté le salon où il est, ou finir de joué la musique avant de vous rejoindre et joué de la musique !", error:"yes"},message)]});
 client.timeoutsVoc.guild.add(message.guild.id);
-const trackAudio = ytdl("https://www.youtube.com/watch?v="+json.items[0].snippet.resourceId.videoId, { filter: "audioonly", quality: "highestaudio"})
+const trackAudio = ytdl("https://www.youtube.com/watch?v="+js.items[0].id.videoId, { filter: "audioonly", quality: "highestaudio"})
 const chan = message.member.voice.channel;
  const connection = client.voc.joinVoiceChannel({
                         channelId: chan.id,
@@ -35,33 +32,13 @@ const chan = message.member.voice.channel;
 client.timeoutsVoc.guild.add(message.guild.id);
  const player = client.voc.createAudioPlayer();
 setVoiceTrack(trackAudio);
-ReplyWithCurrentTrack(json.items[0].snippet)
+ReplyWithCurrentTrack(js.items[0].id.videoId)
 function setVoiceTrack(currentTrack){
     const resource = client.voc.createAudioResource(currentTrack, { inlineVolume: true });
     resource.volume.setVolume(1.5);
     player.play(resource);
 }
-let counter = 1, TrackList = json.items;
-function SearchTrack() {
-    if(TrackList.length <= counter){
-require("node-fetch")(`https://www.googleapis.com/youtube/v3/search?part=snippet&type=playlist&maxResults=50&key=AIzaSyAgpPns8AwUjlXc63jXw7T4bQ9bRoCy7As&q=${encodeURIComponent(TrackList[TrackList.length-1].snippet.title)}`,{
-        }).then(r2 =>r2.json()).then(js2 =>{
-require("node-fetch")(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&key=AIzaSyAgpPns8AwUjlXc63jXw7T4bQ9bRoCy7As&maxResults=50&playlistId=${encodeURIComponent(js2.items[0].id.playlistId)}`,{
-        }).then(res2 =>res2.json()).then(json2 =>{
-            setVoiceTrack(ytdl("https://www.youtube.com/watch?v="+json2.items[0].snippet.resourceId.videoId, { filter: "audioonly", quality: "highestaudio"}));
-            ReplyWithCurrentTrack(TrackList[0].snippet)
-            TrackList = json2.items
-            counter = 1;
-        })
-    })
-    }else{
-        setVoiceTrack(ytdl("https://www.youtube.com/watch?v="+TrackList[counter].snippet.resourceId.videoId, { filter: "audioonly", quality: "highestaudio"}));
-        ReplyWithCurrentTrack(TrackList[counter].snippet)
-        counter += 1;
-    }
-}
 connection.on(client.voc.VoiceConnectionStatus.Ready, () => {
-
     message.channel.send({ embeds:[EOR({desc:"Le bot est connecté"},message)]})
 if(chan.type === "stage"){
     if(message.guild.me.permissions.has("ADMINISTRATOR") || message.member.voice.channel.manageable){
@@ -85,7 +62,10 @@ player.on('idle', () => {
 client.timeoutsVoc.cmd.delete(`play-${message.guild.id}`)
       
   player.stop();
-SearchTrack();
+  connection.destroy()
+  if(client.timeoutsVoc.guild.has(message.guild.id)) client.timeoutsVoc.guild.delete(message.guild.id);
+    if(client.timeoutsVoc.cmd.has(`tts-${message.guild.id}`)) client.timeoutsVoc.cmd.delete(`tts-${message.guild.id}`)
+    if(client.timeoutsVoc.cmd.has(`play-${message.guild.id}`)) client.timeoutsVoc.cmd.delete(`play-${message.guild.id}`)
   //Song stopped  
 });
 }
@@ -104,8 +84,11 @@ connection.on(client.voc.VoiceConnectionStatus.Disconnected, async (oldState, ne
         connection.destroy();
     }
 });
-function ReplyWithCurrentTrack(track){
-            message.reply({
+function ReplyWithCurrentTrack(id){
+require("node-fetch")(`https://youtube.googleapis.com/youtube/v3/videos?part=snippet&id=${encodeURIComponent(id)}&key=AIzaSyAJZuyf3mZ4KzDVTmNfr-SGK498GcJxeMU`,{
+        }).then(r =>r.json()).then(async(js) =>{
+let track = js.items[0].snippet;
+await message.reply({
 failIfNotExists: false,
   components:[{
     type: "ACTION_ROW",
@@ -121,19 +104,18 @@ failIfNotExists: false,
     },embeds:[{
     color: "#FF0000",
     title: track.title,
-    url: "https://www.youtube.com/watch?v="+track.resourceId.videoId,
+    url: "https://www.youtube.com/watch?v="+track.id,
     author: {
         name: track.channelTitle,
     },
     description: track.description.substr(0,3900),
-
     image: {
         url: track.thumbnails.high.url,
     },
     timestamp: new Date(track.publishedAt),
 }] })
+})
 }
-        })
  })
 }
 }

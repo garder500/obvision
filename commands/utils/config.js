@@ -132,13 +132,13 @@ if(args[1] === "voicename"){
     type: "ACTION_ROW",
     components:[{
       type:"BUTTON",
-      customId: "_no",
+      customId: "_no1",
       disabled: true,
       label: "ㅤ",
       style: "SECONDARY"
     },{
       type:"BUTTON",
-      customId: "_no",
+      customId: "_no2",
       disabled: true,
       label: "ㅤ",
       style: "SECONDARY"
@@ -149,13 +149,13 @@ if(args[1] === "voicename"){
       style: "DANGER"
     },{
       type:"BUTTON",
-      customId: "_no",
+      customId: "_no3",
       disabled: true,
       label: "ㅤ",
       style: "SECONDARY"
     },{
       type:"BUTTON",
-      customId: "_no",
+      customId: "_no4",
       disabled: true,
       label: "ㅤ",
       style: "SECONDARY"

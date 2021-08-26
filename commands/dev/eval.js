@@ -80,7 +80,8 @@ if(!args[1]) return message.reply({
 let code = args.slice(1).join(" ");
                
 try {
-let evaluer = eval(code);
+(async() =>{
+let evaluer = await eval(code);
 let evaled = evaluer
  evaled = require("util").inspect(evaled);
 let result, embeds = [];
@@ -158,6 +159,7 @@ message.reply({
   }],
          embeds: embeds
 })
+})();
 } catch (e) {
 
 

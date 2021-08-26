@@ -24,8 +24,6 @@ class Leave extends Command {
                 client.timeoutsVoc.guild.delete(message.guild.id);
                 if(client.timeoutsVoc.cmd.has(`tts-${message.guild.id}`)) client.timeoutsVoc.cmd.delete(`tts-${message.guild.id}`)
                 if(client.timeoutsVoc.cmd.has(`play-${message.guild.id}`)) client.timeoutsVoc.cmd.delete(`play-${message.guild.id}`)
-                if(client.timeoutsVoc.cmd.has(`record-${message.guild.id}`)) client.timeoutsVoc.cmd.delete(`record-${message.guild.id}`)
-                if(client.timeoutsVoc.cmd.has(`vocmod-${message.guild.id}`)) client.timeoutsVoc.cmd.delete(`vocmod-${message.guild.id}`)
             }
             message.channel.send({ embeds: [EOR({ desc:"J'ai correctement quitté le vocal", error:"no" },message)]})
             }else{
