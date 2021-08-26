@@ -4,7 +4,7 @@ const Command = require("../../structure/Command.js"),
     sdk = require("microsoft-cognitiveservices-speech-sdk"),
     readline = require("readline"),
     fs = require("fs");
-  var subscriptionKey = "bcc68f60b1434422ba7679a089834c86";
+  var subscriptionKey = "Your subscription Key";
   var serviceRegion = "francecentral"; // e.g., "westus"
   const waiter = new Set();
 class Tts extends Command {
