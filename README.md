@@ -99,7 +99,8 @@ node index.js
 > Replace "YOUR TOKEN" by your bot token, and YOUR ID and SOME ID, with the bot owner IDs
 
 ### In the index.js file > Line 24
-js
+
+```js
  const db = mysql.createPool({ host: "YOUR HOST", port: "3306", user: "YOUR USER", password: "YOUR PASS", database: "YOUR DATABASE", waitForConnections: true, connectionLimit: 10, queueLimit: 0 });
 ```
 
