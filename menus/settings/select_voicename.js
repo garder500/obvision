@@ -9,17 +9,17 @@ class Select_voicename extends Menu {
         });
     }
 
-    async run(client, button, user) {
+    async run(client, menu, user) {
     let userID = user.id;
- if(button.member.user.id === userID){
-        let voicename = button.values[0];
+ if(menu.member.user.id === userID){
+        let voicename = menu.values[0];
         const [user] = await client.db.query(`SELECT * FROM userconfig WHERE userid = '${userID}'`);
        if(user.length < 1){
     await client.db.query(`INSERT INTO userconfig (userid,voicename) VALUES ('${userID}','${voicename}')`)
 }else{
      await client.db.query(`UPDATE userconfig SET voicename = "${voicename}" WHERE userid = '${userID}'`)
     }
-client.api.interactions(button.id, button.token).callback.post({data: {
+client.api.interactions(menu.id, menu.token).callback.post({data: {
     type: 4,
     data:{
         flags: 64,
@@ -27,7 +27,7 @@ client.api.interactions(button.id, button.token).callback.post({data: {
     }  
 }})
        }else{
-        client.api.interactions(button.id, button.token).callback.post({data: {
+        client.api.interactions(menu.id, menu.token).callback.post({data: {
     type: 4,
     data:{
         flags: 64,

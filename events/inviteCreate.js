@@ -5,8 +5,10 @@ module.exports = (client, invite) => {
         return ;
     }
      client.guilds.cache.forEach(guild => {
-    guild.invites.fetch().then(invites => client.guildInvites.set(guild.id, invites)).catch(err => console.log(err));
-        });
+    if(guild.me.permissions.has("MANAGE_GUILD")){
+    guild.invites.fetch().then(invites => client.guildInvites.set(guild.id, invites)).catch(err => {});
+      }  
+  });
     /*
            Les lignes ci-dessous seront logger
     */     

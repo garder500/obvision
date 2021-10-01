@@ -13,24 +13,15 @@ module.exports = async(client) => {
             await client.user.setActivity(activities[Math.floor(Math.random() * activities.length)]);
             }, 120000);
  client.guilds.cache.forEach(guild => {
-    guild.invites.fetch().then(invites => client.guildInvites.set(guild.id, invites)).catch(err => console.log(err));
-        });
-     client.on("interactionCreate", async data => {
-        if(data.isMessageComponent()){
-         if(data.isSelectMenu()){
-             client.emit("menus",data)
-        }else if(data.isButton()){
-            client.emit('button',data)
-        }
-       }else if(data.isCommand()){
-            client.emit('slashCommands',data)
-        }
-    })
+    if(guild.me.permissions.has("MANAGE_GUILD")){
+    guild.invites.fetch().then(invites => client.guildInvites.set(guild.id, invites)).catch(err => {});
+      }  
+  });
      client.functions.EOR = function EOR(e,message){
             let embed = {
                  author: {
-                    name: message.author.tag,
-                    icon_url: message.author.avatarURL()
+                    name: message.author ? message.author.tag : message.user.tag,
+                    icon_url: message.author ? message.author.avatarURL() : message.user.avatarURL()
                 },
                 color: "#5e5afc",
                 timestamp: new Date(),

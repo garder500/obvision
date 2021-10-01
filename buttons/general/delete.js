@@ -9,8 +9,31 @@ class Delete extends Button {
         });
     }
 
-    async run(client, button) {
-             client.channels.cache.get(button.channelId).messages.fetch(button.message.id).then(msg=>{
+    async run(client, button,user) {
+        if(user){
+            if(user.id === button.user.id){
+    client.channels.cache.get(button.channelId).messages.fetch(button.message.id).then(msg=>{
+            msg.delete();
+    client.api.interactions(button.id, button.token).callback.post({data: {
+    type: 4,
+    data: {
+    flags: 64,
+    content: "Le message à été supprimé"
+    },
+        }})
+    })  
+}else{
+    client.api.interactions(button.id, button.token).callback.post({data: {
+    type: 4,
+    data: {
+    flags: 64,
+    content: "Vous n'êtes pas l'auteur de cette commande."
+    },
+}})
+}
+}else{
+      
+    client.channels.cache.get(button.channelId).messages.fetch(button.message.id).then(msg=>{
             if(!msg.reference){
             msg.delete();
     client.api.interactions(button.id, button.token).callback.post({data: {
@@ -53,6 +76,7 @@ class Delete extends Button {
             }
           
         })
+  }
     }
 }
 

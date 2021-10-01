@@ -7,8 +7,8 @@ module.exports = (client, oldMessage, newMessage) => {
  
 
  	const data = newMessage.content;
-    newMessage.guild.prefix = client.prefix;
-    const args = data.slice(newMessage.guild.prefix.length).trim().split(/ +/g);
+if(!data) return
+    const args = data.slice(client.prefix.length).trim().split(/ +/g);
 
  client.channels.cache.get(newMessage.channel.id).messages.fetch({
 	    	limit: 10,
@@ -19,7 +19,7 @@ module.exports = (client, oldMessage, newMessage) => {
 	    			if(m.reference.messageId === newMessage.id){
 	    				if(m.author.id === client.user.id){
 	    					m.delete();
-if (!data.startsWith(newMessage.guild.prefix)) {
+if (!data.startsWith(client.prefix)) {
         return;
     }
 
