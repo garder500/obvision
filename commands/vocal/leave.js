@@ -20,6 +20,7 @@ class Leave extends Command {
             const connection = client.voc.getVoiceConnection(message.guild.id)
             if(connection){
             connection.destroy();
+                        if(client.guildVoc.has(message.guild.id)) client.guildVoc.delete(message.guild.id)
             if( client.timeoutsVoc.guild.has(message.guild.id)){
                 client.timeoutsVoc.guild.delete(message.guild.id);
                 if(client.timeoutsVoc.cmd.has(`tts-${message.guild.id}`)) client.timeoutsVoc.cmd.delete(`tts-${message.guild.id}`)
