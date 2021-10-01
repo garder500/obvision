@@ -5,6 +5,7 @@ const { token } = require('./config.json'),
   Discord = require('discord.js'),
   {Client, Collection }= require('discord.js'),
   { readdirSync } = require('fs'),
+  ms = require("ms"),
     { join } = require("path"),
     {green,red, blue} = require('colors'),
     {text} = require('figlet'),
@@ -21,7 +22,7 @@ const { token } = require('./config.json'),
     { createReadStream } = require('fs'),
     {loadavg, cpus, totalmem} = require("os"),
     guildInvites = new Map();
- const db = mysql.createPool({ host: "YOUR HOST", port: "3306", user:  "YOUR USER", password:  "YOUR PASS", database:  "YOUR DATABASE", waitForConnections: true, connectionLimit: 10, queueLimit: 0 });
+ const db = mysql.createPool({ host: "YOUR-IP", port: "3306", user:  "YOUR-USER", password:  "YOUR-PASSWORD", database:  "YOUR-DATABASE-NAME", waitForConnections: true, connectionLimit: 10, queueLimit: 0 });
 
 class Class extends Client {
     constructor(token) {
@@ -32,33 +33,52 @@ class Class extends Client {
             },
             failIfNotExists: false,
             messageCacheLifetime: require("ms")("1m"),
-            messageSweepInterval: require("ms")("10s"),
             intents: ["GUILDS","GUILD_MEMBERS","GUILD_BANS","GUILD_EMOJIS_AND_STICKERS","GUILD_INTEGRATIONS","GUILD_INVITES","GUILD_VOICE_STATES","GUILD_PRESENCES","GUILD_MESSAGES","GUILD_MESSAGE_REACTIONS","GUILD_MESSAGE_TYPING","DIRECT_MESSAGES","DIRECT_MESSAGE_REACTIONS","DIRECT_MESSAGE_TYPING"] });
         this.config = require('./config.json');
         this.prefix = '&';
         this.db = db.promise();
         this.functions = {
+                convert: function convert(number) {
+    let numberSymbol = ["", "K", "M", "Md", "B"];
+    let str = String(number);
+    let finalNumber = str;
+    let symbol = Math.floor(str.length / 3.00001);
+    let num = str.length % 3;
+    if (symbol > 0) {
+        if (num === 0) num = 3;
+        num += 2;
+        finalNumber = (Number(str.substr(0, num)) / 100).toFixed(2) + numberSymbol[symbol];
+    }
+    return String(finalNumber).replace(".00", "");
+    },
                         timetrade: function timetrade(time){
                 let finaltime = 0;
+                if(typeof time === "string"){
                 time.split(" ").forEach(timer =>{
                     if(timer.endsWith("y")){
-                        finaltime += Number(timer.replace("y","")) * ((60 * 60 * 24) * 365);
+                        finaltime += ms(`${Number(timer.replace("y",""))}y`);
+                    }
+                    if(timer.endsWith("w")){
+                        finaltime += ms(`${Number(timer.replace("w",""))}w`);
                     }
                     if(timer.endsWith("d")){
-                        finaltime += Number(timer.replace("d","")) * (60 * 60 * 24);
+                        finaltime += ms(`${Number(timer.replace("d",""))}d`);
                     }
                     if(timer.endsWith("h")){
-                        finaltime += Number(timer.replace("h","")) * (60 * 60);
+                        finaltime += ms(`${Number(timer.replace("h",""))}h`);
                     }
                     if(timer.endsWith("m")){
-                        finaltime += Number(timer.replace("m","")) * 60;
+                        finaltime += ms(`${Number(timer.replace("m",""))}m`);
                     }
                     if(timer.endsWith("s")){
-                        finaltime += Number(timer.replace("s",""));
+                        finaltime += ms(`${Number(timer.replace("s",""))}s`);
                     }
                 })
-                return finaltime*1000;
-            }
+            return finaltime;
+            }else{
+            return require("./functions/parsems")(time)
+            }             
+        }
         };
         this.langs = {
             fr: require("./lang/fr.json")
@@ -81,10 +101,10 @@ class Class extends Client {
     createReadStream
       }
         this.timeoutsVoc = {
-                vocMod : new Set(),
                 guild : new Set(),
                 cmd : new Set()
             };
+        this.guildVoc = new Map()
         this.footer = "Obvision"
         //Reload Command Function
         /**
