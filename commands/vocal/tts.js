@@ -4,7 +4,7 @@ const Command = require("../../structure/Command.js"),
     sdk = require("microsoft-cognitiveservices-speech-sdk"),
     readline = require("readline"),
     fs = require("fs");
-  var subscriptionKey = "Your subscription Key";
+  var subscriptionKey = "YOUR-SUBSCRIPTION-KEY";
   var serviceRegion = "francecentral"; // e.g., "westus"
   const waiter = new Set();
 class Tts extends Command {
@@ -63,6 +63,7 @@ function synthesizeSpeech() {
 
 
 if(args[1]){
+    if(client.timeoutsVoc.guild.has(message.guild.id)) return message.channel.send({ embeds:[ client.functions.EOR({ desc: "Le bot est déja en train de joué, veuillez réitérer cette commande quand il aura fini",error: "yes"},message)]})
     if( args.slice(1).join(" ").length <= 170){
       if (message.member.voice.channel) {
 fs.readFile("./server.json", (err, data) => {
@@ -105,7 +106,7 @@ player.play(resource);
 connection.on(client.voc.VoiceConnectionStatus.Ready, () => {
 
     message.channel.send({ embeds:[client.functions.EOR({desc:"Le bot est connecté"},message)]})
-if(chan.type === "stage"){
+if(chan.type === "GUILD_STAGE_VOICE"){
     if(message.guild.me.permissions.has("ADMINISTRATOR") || message.member.voice.channel.manageable){
   message.guild.me.voice.setSuppressed(false);
   PlayTts();
