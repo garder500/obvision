@@ -133,9 +133,9 @@ class Clear extends Command {
     setTimeout(()=>{
         if(sup === total){
                 msg.delete().then(()=>{
-                   message.channel.send(`Message totaux supprimés \`${total}\`\n Supprimé en \`${Number(((Date.now()-second)-500)/1000).toFixed(2)}\` secondes`).then(deleteIt => deleteIt.delete({ timeout: 5000}))
+                   message.channel.send(`Message totaux supprimés \`${total}\`\n Supprimé en \`${Number(((Date.now()-second)-500)/1000).toFixed(2)}\` secondes`).then(deleteIt => setTimeout(() =>{ deleteIt.delete() },5000))
                 }).catch(()=>{
-                 message.channel.send(`Message totaux supprimés \`${total}\`\n Supprimé en \`${Number(((Date.now()-second)-500)/1000).toFixed(2)}\` secondes`).then(deleteIt => deleteIt.delete({ timeout: 5000}))  
+                 message.channel.send(`Message totaux supprimés \`${total}\`\n Supprimé en \`${Number(((Date.now()-second)-500)/1000).toFixed(2)}\` secondes`).then(deleteIt => setTimeout(() =>{ deleteIt.delete() },5000))
                 }) ;
                 
         }
