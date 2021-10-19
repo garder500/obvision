@@ -117,32 +117,7 @@ embeds[embeds.length - 1].footer = {
             text: client.user.username,
             icon_url: client.user.displayAvatarURL()
         }
-
-if(args.slice(1).join(" ").toLowerCase().includes("token")) {
-  const embed2 = {
-    failIfNotExists: false,
-    allowedMentions : {
-                            repliedUser: false
-                        },
-  components:[{
-   type: "ACTION_ROW",
-    components:[{
-      type:"BUTTON",
-      customId: "delete",
-      emoji: "🗑️",
-      style: "DANGER"
-    }]
-  }],
-         embeds: [{
-        title: "<a:error:773202660211163166> Erreur",
-        color: 0xe71619,
-        timestamp: new Date(),
-        description: `Vous ne pouvez pas voir le token du bot`,
-       
-    }]
-}
-  return message.buttonsReply("",embed2)
-}
+        
 message.reply({
     failIfNotExists: false,
   allowedMentions : {

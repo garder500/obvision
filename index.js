@@ -2,6 +2,7 @@
   const  mysql = require('mysql2')
 
 const { token } = require('./config.json'),
+config = require('./config.json'),
   Discord = require('discord.js'),
   {Client, Collection }= require('discord.js'),
   { readdirSync } = require('fs'),
@@ -22,7 +23,7 @@ const { token } = require('./config.json'),
     { createReadStream } = require('fs'),
     {loadavg, cpus, totalmem} = require("os"),
     guildInvites = new Map();
- const db = mysql.createPool({ host: "YOUR-IP", port: "3306", user:  "YOUR-USER", password:  "YOUR-PASSWORD", database:  "YOUR-DATABASE-NAME", waitForConnections: true, connectionLimit: 10, queueLimit: 0 });
+ const db = mysql.createPool({ host: config.database.host, port: config.database.port, user:  config.database.user, password:  config.database.password, database:  config.database.database, waitForConnections: true, connectionLimit: 10, queueLimit: 0 });
 
 class Class extends Client {
     constructor(token) {
@@ -35,7 +36,7 @@ class Class extends Client {
             messageCacheLifetime: require("ms")("1m"),
             intents: ["GUILDS","GUILD_MEMBERS","GUILD_BANS","GUILD_EMOJIS_AND_STICKERS","GUILD_INTEGRATIONS","GUILD_INVITES","GUILD_VOICE_STATES","GUILD_PRESENCES","GUILD_MESSAGES","GUILD_MESSAGE_REACTIONS","GUILD_MESSAGE_TYPING","DIRECT_MESSAGES","DIRECT_MESSAGE_REACTIONS","DIRECT_MESSAGE_TYPING"] });
         this.config = require('./config.json');
-        this.prefix = '&';
+        this.prefix = config.prefix;
         this.db = db.promise();
         this.functions = {
                 convert: function convert(number) {

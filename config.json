@@ -1,10 +1,18 @@
 {
-    "token":"YOUR TOKEN",
+    "token":"ODAwMDA3OTczNDM0ODE4NTYx.YAL3fA.jJqv0M8KQAoomuRbvqJouvQSzf0",
+    "prefix": "&",
     "owner": {
-        "id": "YOUR ID"
+        "id": "243117191774470146"
     },
     "owners": [
-        "SOME ID",
-        "SOME ID"
-    ]
+        "357595301210619904",
+        "243117191774470146"
+    ],
+    "database":{
+        "host":"149.91.80.94",
+        "port":3306,
+        "user": "u455_A1PxzuFA6J",
+        "password":"K.o1aSUb9v03opzADwqCx^Io",
+        "database":"s455_obvision"
+    }
 }
