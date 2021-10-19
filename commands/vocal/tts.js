@@ -4,8 +4,6 @@ const Command = require("../../structure/Command.js"),
     sdk = require("microsoft-cognitiveservices-speech-sdk"),
     readline = require("readline"),
     fs = require("fs");
-  var subscriptionKey = "YOUR-SUBSCRIPTION-KEY";
-  var serviceRegion = "francecentral"; // e.g., "westus"
   const waiter = new Set();
 class Tts extends Command {
     constructor() {
@@ -35,7 +33,7 @@ rate = 0, pitch = 0, voicename = "fr-FR-DeniseNeural"
 }
           let finalFile = `./data/${message.author.id}-${Date.now()}.wav`
 function synthesizeSpeech() {
-  let speechConfig = sdk.SpeechConfig.fromSubscription(subscriptionKey, serviceRegion);
+  let speechConfig = sdk.SpeechConfig.fromSubscription(client.config["azure-suscription-key"],client.config["azure-service-region"]);
 
     const audioConfig = sdk.AudioConfig.fromAudioFileOutput(finalFile);
     const synthesizer = new sdk.SpeechSynthesizer(speechConfig, audioConfig);
