@@ -4,6 +4,8 @@
     "owner": {
         "id": "OWNER-ID"
     },
+    "azure-suscription-key":"YOUR-SUBSRIPTION-KEY",
+    "azure-service-region":"francecentral",
     "owners": [
         "USER-ID",
         "USER-ID"
